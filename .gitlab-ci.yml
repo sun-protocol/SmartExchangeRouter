@@ -1,0 +1,36 @@
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script:
+    - ls -allh
+    - npm install
+    - npm run compile
+
+test:
+  stage: test
+  script:
+    - ls -allh
+    - npm install
+    - npm run test:clean
+
+coverage:
+  stage: test
+  script:
+    - ls -allh
+    - npm install
+    - npm run coverage
+  coverage: '/^All files\s*\|(\s*\d+\.*\d*\s*\|)+\s*\|$/'
+  artifacts:
+    paths:
+      - coverage
+    when: on_success
+    expire_in: 1 day
+
+deploy:
+  stage: deploy
+  script:
+    - echo "deploy:push the project to the Product"
