@@ -86,7 +86,7 @@ If user use 100000 USDT to swap USDD token, the parameteres should be:
 |Name|Value|Description|
 |---|---|---|
 |path|[USDT address,USDD address]| path of tokens|
-|poolVersion|['usdt20psm']|poolVersion can be `v1`,`V2`,`V3`,`usdt20psm`,`usdd202pool`...|
+|poolVersion|['usdt20psm']|poolVersion can be `v1`,`V2`,`V3`,`usdt20psm`,`usdd202pool`，`2pooltusdusdt`,`usdc2pooltusdusdt`,`usdd2pooltusdusdt`,`usdj2pooltusdusdt`, `oldusdcpool`,`old3pool`|
 |versionLen|['2']|array of counts of token numbers in `poolVersions`, eg: if path = [A,B,C,D],poolVersion = ['v2','v2','v3'],that means A->B use 'V2', B->C use 'V2',C->D use 'V3',so the  versionLen = ['3','1']. The number of first poolversion count must +1 |
 |fees|[0,0]|`poolFees` used to distinguish V3 pools; all other pools are set to 0. |
 |data|['100000000000',amountOut *(1 - flapPiont),receiver,deadline]|SwapData|
