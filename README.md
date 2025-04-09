@@ -42,137 +42,7 @@ tronbox migrate --network nile --f 1 --to 2
 
 # How to Use
 
-User can call the API to obtain the trade path and expected data, then invoke the `swapExactInput` method of the smart contract to trigger the transaction. The smart router will handle the transaction data internally and complete the trade.
-
-## Get to the Trade Info from API
-
-API:
-
-**Name: https://rot.endjgfsv.link/swap/route**
-
-**Type: GET**
-
-
-**Parameters:**
-|Name|Description|
-|---|---|
-|fromToken|Address of fromToken|
-|toToken|Address of toToken|
-|amountIn|Amount of the token to be swapped|
-|typeList|Types available for the swap (PSM,CURVE,CURVE_COMBINATION,WTRX,SUNSWAP_V1,SUNSWAP_V2,SUNSWAP_V3)|
-
-**Returns:**
-|Name|Description|
-|---|---|
-|amountIn|Amount of the token entered (divided by precision)|
-|amountOut|Amount of the token that can be swapped for, calculated by the Smart Router (divided by precision)|
-|InUsd|USD price of the entered token|
-|OutUsd|USD price of the token to be swapped for|
-|impact|Price impact|
-|fee|Transaction fee|
-|tokens|Addresses of the tokens that the path from fromToken to toToken involves|
-|symbols|Symbols of the tokens that the path from fromToken to toToken involves|
-|poolFees|Transaction fees of the liquidity pools that the path from fromToken to toToken involves (0 is displayed for non-SunSwap V3 pools)|
-|poolVersions|Versions of the liquidity pools that the path from fromToken to toToken involves|
-|stepAmountsOut|Amounts of the tokens obtained from each pool along the path from fromToken to toToken|
-
-
-
-**Demo**
-
-Request:
-swap USDT to USDD with 100000 USDT in all types
-```
-curl https://rot.endjgfsv.link/swap/router?fromToken=TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t&toToken=TXDk8mbtRbXeYuMNS83CfKPaYYT8XWv9Hz&amountIn=100000000000&typeList=PSM,CURVE,CURVE_COMBINATION,WTRX,SUNSWAP_V1,SUNSWAP_V2,SUNSWAP_V3
-```
-Result:
-API returns 3 paths of trade ordered by amountOut
-```
-{
-  "code": 0,
-  "message": "SUCCESS",
-  "data": [
-    {
-      "amountIn": "100000.000000",
-      "amountOut": "100000.000000000000000000",
-      "inUsd": "99928.422500000000000000000000",
-      "outUsd": "100000.000000000000000000000000000000000000",
-      "impact": "0.000000",
-      "fee": "0.000000",
-      "tokens": [
-        "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
-        "TXDk8mbtRbXeYuMNS83CfKPaYYT8XWv9Hz"
-      ],
-      "symbols": [
-        "USDT",
-        "USDD"
-      ],
-      "poolFees": [
-        "0",
-        "0"
-      ],
-      "poolVersions": [
-        "usdt20psm"
-      ],
-      "stepAmountsOut": [
-        "100000.000000000000000000"
-      ]
-    },
-    {
-      "amountIn": "100000.000000",
-      "amountOut": "99977.728820798625493153",
-      "inUsd": "99928.422500000000000000000000",
-      "outUsd": "99977.728820798625493153000000000000000000",
-      "impact": "-0.000050",
-      "fee": "10.000000",
-      "tokens": [
-        "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
-        "TXDk8mbtRbXeYuMNS83CfKPaYYT8XWv9Hz"
-      ],
-      "symbols": [
-        "USDT",
-        "USDD"
-      ],
-      "poolFees": [
-        "100",
-        "0"
-      ],
-      "poolVersions": [
-        "v3"
-      ],
-      "stepAmountsOut": [
-        "99977.728820798625493153"
-      ]
-    },
-    {
-      "amountIn": "100000.000000",
-      "amountOut": "99906.907800507518972425",
-      "inUsd": "99928.422500000000000000000000",
-      "outUsd": "99906.907800507518972425000000000000000000",
-      "impact": "-0.000084",
-      "fee": "40.000000",
-      "tokens": [
-        "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
-        "TXDk8mbtRbXeYuMNS83CfKPaYYT8XWv9Hz"
-      ],
-      "symbols": [
-        "USDT",
-        "USDD"
-      ],
-      "poolFees": [
-        "0",
-        "0"
-      ],
-      "poolVersions": [
-        "usdd202pool"
-      ],
-      "stepAmountsOut": [
-        "99906.907800507518972425"
-      ]
-    }
-  ]
-}
-```
+User can invoke the `swapExactInput` method of the smart contract to trigger the transaction. The smart router will handle the transaction data internally and complete the trade.
 
 ## Build the transaction
 
@@ -211,41 +81,14 @@ struct SwapData {
 
 **Fullfill the Parameters**
 
-As a sample for API result path 1
-```
-{
-      "amountIn": "100000.000000",
-      "amountOut": "100000.000000000000000000",
-      "inUsd": "99928.422500000000000000000000",
-      "outUsd": "100000.000000000000000000000000000000000000",
-      "impact": "0.000000",
-      "fee": "0.000000",
-      "tokens": [
-        "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
-        "TXDk8mbtRbXeYuMNS83CfKPaYYT8XWv9Hz"
-      ],
-      "symbols": [
-        "USDT",
-        "USDD"
-      ],
-      "poolFees": [
-        "0",
-        "0"
-      ],
-      "poolVersions": [
-        "usdt20psm"
-      ],
-      "stepAmountsOut": [
-        "100000.000000000000000000"
-      ]
-    }
-```
+If user use 100000 USDT to swap USDD token, the parameteres should be:
+
 |Name|Value|Description|
 |---|---|---|
-|path|[USDT address,USDD address]| `tokens` in API result|
-|poolVersion|['usdt20psm']|`poolVersions` in API result|
+|path|[USDT address,USDD address]| path of tokens|
+|poolVersion|['usdt20psm']|poolVersion can be `v1`,`V2`,`V3`,`usdt20psm`,`usdd202pool`...|
 |versionLen|['2']|array of counts of token numbers in `poolVersions`, eg: if path = [A,B,C,D],poolVersion = ['v2','v2','v3'],that means A->B use 'V2', B->C use 'V2',C->D use 'V3',so the  versionLen = ['3','1']. The number of first poolversion count must +1 |
-|fees|[0,0]|`poolFees` in API result |
+|fees|[0,0]|`poolFees` used to distinguish V3 pools; all other pools are set to 0. |
 |data|['100000000000',amountOut *(1 - flapPiont),receiver,deadline]|SwapData|
 
 
@@ -256,8 +99,7 @@ As a sample for API result path 1
 
 ```javascript
 const tronWeb = require('tronweb');
-const contractAddress ='TCFNp179Lg46D16zKoumd4Poa2WFFdtqYj
-';
+const contractAddress = 'TCFNp179Lg46D16zKoumd4Poa2WFFdtqYj';
 
 const amountOutMin = '99000000000000000000000'; // Example minimum amount of tokens to receive ,1% flap point
 const pathUSDT2USDD =       ["TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
