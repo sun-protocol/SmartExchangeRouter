@@ -21,11 +21,11 @@ jobs:
             npm install
             npm run compile
       - name: test
-         run: |
+        run: |
             npm run test:clean
       - name: coverage
-         run: |
+        run: |
             npm run coverage
       - name: deploy
-         run: |
+        run: |
             echo "deploy:push the project to the Product"
