@@ -7,8 +7,7 @@ swap smart-router
 ## Install tronbox
 
 ```
-git clone git@39.106.174.213:defi-infra/tronbox.git
-npm install
+npm install tronbox
 npm run build
 ```
 
