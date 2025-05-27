@@ -9,13 +9,13 @@ const tronWeb = await initTronWeb(nile);
 const router = await tronWeb.contract().at(nile.smartRouter);
 const trx = '0x0000000000000000000000000000000000000000';
 let result = await router
-  .swapExactETHForTokens(
+  .swapExactInput(
     1000000,
     1,
     [trx, nile.usdtToken, nile.usdjToken, nile.tusdToken],
     ['v1', 'v2', 'old3pool'],
     [2, 1, 1],
-    'TF5MekHgFz6neU7zTpX4h2tha5miPDUj3z',
+    'your address',
     Math.floor(Date.now() / 1000 + 86400),
   )
   .send({ callValue: 1000000 });
