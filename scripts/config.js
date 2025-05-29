@@ -8,6 +8,8 @@ module.exports = {
     routerV2: 'TKzxdSv2FZKQrEqkKVgp5DcwEXBEKMg2Ax',
     routerV1: 'TXk8rQSAvPvBBNtqSoY6nCfsXWCSSpTVQF',
     routerV3: 'TQAvWQpT9H916GckwWDJNhYZvQMkuRL7PN',
+    v2Factory: 'TKWJdrQkqHisa1X8HUdHEfREvTzw4pMAaY',
+    v3Factory: 'TThJt8zaJzJMhCEScH7zWKnp5buVZqys9x',
     usdtToken: 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
     usdjToken: 'TMwFHYXLJaRUPeW6421aqXL4ZEzPRFGkGT',
     tusdToken: 'TUpMhErZL2fhh4sVNULAbNKLokS4GjC1F4',
